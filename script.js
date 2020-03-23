@@ -14,7 +14,7 @@ function buttonClick(value) {
         handleSymbol(value)
     } else {
         handleNumber(value);
-        console.log("here");
+
     }
     rerender();
 }
@@ -36,6 +36,7 @@ function handleSymbol(value){
             previousOperator = null;
             break;
         case "=":
+
             if(previousOperator === null) {
                 return;
             }
@@ -56,6 +57,33 @@ function handleSymbol(value){
             break;
     }
 }
+
+function handleMath(value) {
+    const intBuffer = parseInt(buffer);
+    if (runningTotal === 0) {
+        runningTotal = intBuffer;
+    } else {
+        flushOperation(intBuffer);
+    }
+
+    previousOperator = value;
+
+    buffer = "0"
+}
+
+function flushOperation (intBuffer){
+    if(previousOperator === "+") {
+        runningTotal += intBuffer;
+    } else if(previousOperator === "-"){
+        runningTotal -= intBuffer;
+    } else if(previousOperator === "×"){
+        runningTotal *= intBuffer;
+    } else {
+        runningTotal /= intBuffer;
+    };
+}
+
+
 
 
 function rerender() {
